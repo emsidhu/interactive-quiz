@@ -111,7 +111,8 @@ let questions = [
     }
 ]
 let curQuestion = 0;
-const NUMQUESTIONS = 10;
+let resultsShown = false;
+const NUMQUESTIONS = questions.length;
 
 // Get DOM elements
 // Form
@@ -127,7 +128,10 @@ let submitBtn = document.querySelector("input[type='submit']");
 // Results
 let resultDiv = document.getElementById("results");
 let scoreP = document.getElementById("score");
-let table = document.querySelector("table");
+let answerTable = document.querySelector("table");
+let answerKey = document.getElementById("answer-key");
+let toggleKeyBtn = document.getElementById("key-toggle");
+let toggleFormBtn = document.getElementById("form-toggle");
 
 
 // Function Definitions
@@ -147,15 +151,19 @@ function renderQuestion(question) {
 }
 
 function renderResults(e) {
-    e.preventDefault()
+    e.preventDefault();
     form.style.display = "none";
     resultDiv.style.display = "";
+    submitBtn.style.display = "none";
+    nextBtn.style.display = "";
+    nextBtn.style.visibility = "hidden";
     let score = 0;
     for (let i = 0; i < NUMQUESTIONS; i++) {
         score += (questions[i].answer == questions[i].choice);
     }
-    scoreP.textContent = `Your Score Was ${score}/${NUMQUESTIONS}`;
+    scoreP.textContent = `Your Score Was ${score}/${NUMQUESTIONS}!`;
     populateAnswerTable();
+    resultsShown = true;
 }
 
 function chooseOption(choice) {
@@ -170,7 +178,9 @@ function chooseOption(choice) {
     }
     optionDivs[question.answer].classList.add("correct");
     nextBtn.disabled = false;
-    submitBtn.style.visibility = curQuestion < 9 ? "hidden" : "";
+    let onLastQuestion = curQuestion >= NUMQUESTIONS-1;
+    nextBtn.style.visibility = resultsShown && onLastQuestion  ? "hidden" : "";
+    submitBtn.style.visibility = onLastQuestion ? "" : "hidden";
 }
 
 function getPrevQuestion(e) {
@@ -189,13 +199,17 @@ function getNextQuestion(e) {
     renderQuestion(questions[curQuestion]);
 
     prevBtn.style.visibility = "visible";
-    if (curQuestion >= NUMQUESTIONS - 1) {
-        nextBtn.style.display = "none"
+    
+    if (curQuestion >= NUMQUESTIONS - 1 && !resultsShown) {
+        nextBtn.style.display = "none";
+        submitBtn.style.display = "";
+    } else {
+        nextBtn.style.display = "";
+        submitBtn.style.display = "none";
     }
 
     let choice = questions[curQuestion].choice
     if (choice != -1) chooseOption(choice);
-    submitBtn.style.display = curQuestion < 9 ? "none" : "";
 }
 
 function populateAnswerTable() {
@@ -203,17 +217,42 @@ function populateAnswerTable() {
         let question = questions[i];
 
         let tr = document.createElement("tr");
+        let tdNumber = document.createElement("td");
         let tdQuery = document.createElement("td");
         let tdCorrect = document.createElement("td");
-        let tdChoice = document.createElement("td");
         
+        tdNumber.textContent = i+1;
         tdQuery.textContent = question.query;
         tdCorrect.textContent = question.options[question.answer];
-        table.appendChild(tr);
+        answerTable.appendChild(tr);
+        tr.appendChild(tdNumber);
         tr.appendChild(tdQuery);
         tr.appendChild(tdCorrect);
 
     }
+}
+
+function toggleAnswerKey() {
+    if (answerKey.style.display == "none") {
+        toggleKeyBtn.textContent = "Hide the Answer Key"
+        answerKey.style.display = "";
+    } else {
+        toggleKeyBtn.textContent = "Show the Answer Key"
+        answerKey.style.display = "none";
+    }
+}
+
+function toggleForm() {
+    if (form.style.display == "none") {
+        toggleFormBtn.textContent = "Hide the Quiz"
+        curQuestion = 0;
+        renderQuestion(questions[0]);
+        form.style.display = "";
+    } else {
+        toggleFormBtn.textContent = "Show the Quiz"
+        form.style.display = "none";
+    }
+    
 }
 
 // Event Listeners
@@ -236,11 +275,14 @@ nextBtn.addEventListener("click", getNextQuestion)
 
 submitBtn.addEventListener("click", renderResults);
 
+toggleKeyBtn.addEventListener("click", toggleAnswerKey);
+
+toggleFormBtn.addEventListener("click", toggleForm);
+
 
 // Startup Code
 resultDiv.style.display = "none";
-prevBtn.style.visibility = "hidden";
 submitBtn.style.display = "none";
-submitBtn.style.visibility = false;
+prevBtn.style.visibility = "hidden";
 nextBtn.disabled = true;
 renderQuestion(questions[curQuestion]);

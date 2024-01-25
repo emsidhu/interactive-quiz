@@ -1,0 +1,418 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 33554432 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2828), pid=15557, tid=15559
+#
+# JRE version:  (17.0.9+9) (build )
+# Java VM: OpenJDK 64-Bit Server VM (17.0.9+9, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -- %E" (or dumping to /home/vagrant/cmpt276/Assignments/interactive-quiz/core.15557)
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dapplication.home=/home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64 -Xms8m -Djdk.module.main=jdk.jcmd jdk.jcmd/sun.tools.jcmd.JCmd 2641 VM.uptime
+
+Host: AMD Ryzen 5 4600H with Radeon Graphics, 2 cores, 3G, Ubuntu 18.04.6 LTS
+Time: Thu Jan 25 08:24:42 2024 UTC elapsed time: 1.412555 seconds (0d 0h 0m 1s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f8e98027340):  JavaThread "Unknown thread" [_thread_in_vm, id=15559, stack(0x00007f8e9f86a000,0x00007f8e9f96b000)]
+
+Stack: [0x00007f8e9f86a000,0x00007f8e9f96b000],  sp=0x00007f8e9f969540,  free space=1021k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xedfde1]  VMError::report_and_die(int, char const*, char const*, __va_list_tag*, Thread*, unsigned char*, void*, void*, char const*, int, unsigned long)+0x1a1
+V  [libjvm.so+0xee09ad]  VMError::report_and_die(Thread*, char const*, int, unsigned long, VMErrorType, char const*, __va_list_tag*)+0x2d
+V  [libjvm.so+0x60ac3c]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*, ...)+0xdc
+V  [libjvm.so+0xc210a8]  os::pd_commit_memory(char*, unsigned long, bool)+0xd8
+V  [libjvm.so+0xc1aa2f]  os::commit_memory(char*, unsigned long, bool)+0x1f
+V  [libjvm.so+0x6fff1c]  G1CMMarkStack::resize(unsigned long)+0x5c
+V  [libjvm.so+0x703d7f]  G1ConcurrentMark::G1ConcurrentMark(G1CollectedHeap*, G1RegionToSpaceMapper*, G1RegionToSpaceMapper*)+0x56f
+V  [libjvm.so+0x6f286c]  G1CollectedHeap::initialize()+0x70c
+V  [libjvm.so+0xe8dea2]  universe_init()+0xd2
+V  [libjvm.so+0x7ff787]  init_globals()+0x37
+V  [libjvm.so+0xe64677]  Threads::create_vm(JavaVMInitArgs*, bool*)+0x387
+V  [libjvm.so+0x8bfab2]  JNI_CreateJavaVM+0x52
+C  [libjli.so+0x9c6f]  JavaMain+0x8f
+C  [libjli.so+0xdf69]  ThreadJavaMain+0x9
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007f8e9ef59880, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x00007f8e98062570 GCTaskThread "GC Thread#0" [stack: 0x00007f8e9c395000,0x00007f8e9c495000] [id=15562]
+
+[error occurred during error reporting (printing all threads), id 0xb, SIGSEGV (0xb) at pc=0x00007f8e9e31e180]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f8e98022b70] Heap_lock - owner thread: 0x00007f8e98027340
+
+Heap address: 0x00000000c2400000, size: 988 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000c2400000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xb, SIGSEGV (0xb) at pc=0x00007f8e9e8e663a]
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.203 Loaded shared library /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (1 events):
+Event: 0.166 Protecting memory [0x00007f8e9f86a000,0x00007f8e9f86e000] with protection modes 0
+
+
+Dynamic libraries:
+c2400000-100000000 ---p 00000000 00:00 0 
+5617f953a000-5617f953b000 r--p 00000000 fd:00 1576943                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/bin/jcmd
+5617f953b000-5617f953c000 r-xp 00001000 fd:00 1576943                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/bin/jcmd
+5617f953c000-5617f953d000 r--p 00002000 fd:00 1576943                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/bin/jcmd
+5617f953d000-5617f953e000 r--p 00002000 fd:00 1576943                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/bin/jcmd
+5617f953e000-5617f953f000 rw-p 00003000 fd:00 1576943                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/bin/jcmd
+5617f9c16000-5617f9c5d000 rw-p 00000000 00:00 0                          [heap]
+7f8e78000000-7f8e78021000 rw-p 00000000 00:00 0 
+7f8e78021000-7f8e7c000000 ---p 00000000 00:00 0 
+7f8e7c000000-7f8e7c021000 rw-p 00000000 00:00 0 
+7f8e7c021000-7f8e80000000 ---p 00000000 00:00 0 
+7f8e80000000-7f8e80021000 rw-p 00000000 00:00 0 
+7f8e80021000-7f8e84000000 ---p 00000000 00:00 0 
+7f8e8426a000-7f8e844fb000 rw-p 00000000 00:00 0 
+7f8e844fb000-7f8e863db000 ---p 00000000 00:00 0 
+7f8e863db000-7f8e8664b000 rwxp 00000000 00:00 0 
+7f8e8664b000-7f8e8d913000 ---p 00000000 00:00 0 
+7f8e8d913000-7f8e8db83000 rwxp 00000000 00:00 0 
+7f8e8db83000-7f8e8dea2000 ---p 00000000 00:00 0 
+7f8e8dea2000-7f8e8e112000 rwxp 00000000 00:00 0 
+7f8e8e112000-7f8e953db000 ---p 00000000 00:00 0 
+7f8e953db000-7f8e98000000 r--s 00000000 fd:00 1577346                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/modules
+7f8e98000000-7f8e98079000 rw-p 00000000 00:00 0 
+7f8e98079000-7f8e9c000000 ---p 00000000 00:00 0 
+7f8e9c03c000-7f8e9c192000 rw-p 00000000 00:00 0 
+7f8e9c192000-7f8e9c193000 ---p 00000000 00:00 0 
+7f8e9c193000-7f8e9c293000 rw-p 00000000 00:00 0 
+7f8e9c293000-7f8e9c294000 ---p 00000000 00:00 0 
+7f8e9c294000-7f8e9c394000 rw-p 00000000 00:00 0 
+7f8e9c394000-7f8e9c395000 ---p 00000000 00:00 0 
+7f8e9c395000-7f8e9c495000 rw-p 00000000 00:00 0 
+7f8e9c495000-7f8e9ca5f000 ---p 00000000 00:00 0 
+7f8e9ca5f000-7f8e9cc66000 rw-p 00000000 00:00 0 
+7f8e9cc66000-7f8e9cd4c000 ---p 00000000 00:00 0 
+7f8e9cd4c000-7f8e9cd51000 rw-p 00000000 00:00 0 
+7f8e9cd51000-7f8e9ce37000 ---p 00000000 00:00 0 
+7f8e9ce37000-7f8e9ce42000 r-xp 00000000 fd:00 7602368                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f8e9ce42000-7f8e9d041000 ---p 0000b000 fd:00 7602368                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f8e9d041000-7f8e9d042000 r--p 0000a000 fd:00 7602368                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f8e9d042000-7f8e9d043000 rw-p 0000b000 fd:00 7602368                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f8e9d043000-7f8e9d049000 rw-p 00000000 00:00 0 
+7f8e9d049000-7f8e9d060000 r-xp 00000000 fd:00 7602365                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f8e9d060000-7f8e9d25f000 ---p 00017000 fd:00 7602365                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f8e9d25f000-7f8e9d260000 r--p 00016000 fd:00 7602365                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f8e9d260000-7f8e9d261000 rw-p 00017000 fd:00 7602365                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f8e9d261000-7f8e9d263000 rw-p 00000000 00:00 0 
+7f8e9d263000-7f8e9d26e000 r-xp 00000000 fd:00 7602370                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f8e9d26e000-7f8e9d46d000 ---p 0000b000 fd:00 7602370                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f8e9d46d000-7f8e9d46e000 r--p 0000a000 fd:00 7602370                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f8e9d46e000-7f8e9d46f000 rw-p 0000b000 fd:00 7602370                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f8e9d46f000-7f8e9d477000 r-xp 00000000 fd:00 7602366                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f8e9d477000-7f8e9d677000 ---p 00008000 fd:00 7602366                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f8e9d677000-7f8e9d678000 r--p 00008000 fd:00 7602366                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f8e9d678000-7f8e9d679000 rw-p 00009000 fd:00 7602366                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f8e9d679000-7f8e9d816000 r-xp 00000000 fd:00 7602362                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f8e9d816000-7f8e9da15000 ---p 0019d000 fd:00 7602362                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f8e9da15000-7f8e9da16000 r--p 0019c000 fd:00 7602362                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f8e9da16000-7f8e9da17000 rw-p 0019d000 fd:00 7602362                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f8e9da17000-7f8e9da1e000 r-xp 00000000 fd:00 7602375                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f8e9da1e000-7f8e9dc1d000 ---p 00007000 fd:00 7602375                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f8e9dc1d000-7f8e9dc1e000 r--p 00006000 fd:00 7602375                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f8e9dc1e000-7f8e9dc1f000 rw-p 00007000 fd:00 7602375                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f8e9dc1f000-7f8e9de72000 r--p 00000000 fd:00 1577356                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/server/libjvm.so
+7f8e9de72000-7f8e9eb90000 r-xp 00253000 fd:00 1577356                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/server/libjvm.so
+7f8e9eb90000-7f8e9ee1c000 r--p 00f71000 fd:00 1577356                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/server/libjvm.so
+7f8e9ee1c000-7f8e9eed5000 r--p 011fc000 fd:00 1577356                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/server/libjvm.so
+7f8e9eed5000-7f8e9ef0a000 rw-p 012b5000 fd:00 1577356                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/server/libjvm.so
+7f8e9ef0a000-7f8e9ef64000 rw-p 00000000 00:00 0 
+7f8e9ef64000-7f8e9f14b000 r-xp 00000000 fd:00 7602358                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f8e9f14b000-7f8e9f34b000 ---p 001e7000 fd:00 7602358                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f8e9f34b000-7f8e9f34f000 r--p 001e7000 fd:00 7602358                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f8e9f34f000-7f8e9f351000 rw-p 001eb000 fd:00 7602358                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f8e9f351000-7f8e9f355000 rw-p 00000000 00:00 0 
+7f8e9f355000-7f8e9f358000 r-xp 00000000 fd:00 7602361                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f8e9f358000-7f8e9f557000 ---p 00003000 fd:00 7602361                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f8e9f557000-7f8e9f558000 r--p 00002000 fd:00 7602361                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f8e9f558000-7f8e9f559000 rw-p 00003000 fd:00 7602361                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f8e9f559000-7f8e9f573000 r-xp 00000000 fd:00 7602373                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f8e9f573000-7f8e9f772000 ---p 0001a000 fd:00 7602373                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f8e9f772000-7f8e9f773000 r--p 00019000 fd:00 7602373                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f8e9f773000-7f8e9f774000 rw-p 0001a000 fd:00 7602373                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f8e9f774000-7f8e9f778000 rw-p 00000000 00:00 0 
+7f8e9f778000-7f8e9f7a1000 r-xp 00000000 fd:00 7602347                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f8e9f7f3000-7f8e9f819000 rw-p 00000000 00:00 0 
+7f8e9f819000-7f8e9f820000 ---p 00000000 00:00 0 
+7f8e9f820000-7f8e9f82e000 r--p 00000000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f82e000-7f8e9f840000 r-xp 0000e000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f840000-7f8e9f846000 r--p 00020000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f846000-7f8e9f847000 ---p 00026000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f847000-7f8e9f848000 r--p 00026000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f848000-7f8e9f849000 rw-p 00027000 fd:00 1577324                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjava.so
+7f8e9f849000-7f8e9f84a000 rw-p 00000000 00:00 0 
+7f8e9f84a000-7f8e9f84e000 r--p 00000000 fd:00 1577328                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjimage.so
+7f8e9f84e000-7f8e9f861000 r-xp 00004000 fd:00 1577328                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjimage.so
+7f8e9f861000-7f8e9f867000 r--p 00017000 fd:00 1577328                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjimage.so
+7f8e9f867000-7f8e9f869000 r--p 0001c000 fd:00 1577328                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjimage.so
+7f8e9f869000-7f8e9f86a000 rw-p 0001e000 fd:00 1577328                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjimage.so
+7f8e9f86a000-7f8e9f86e000 ---p 00000000 00:00 0 
+7f8e9f86e000-7f8e9f96d000 rw-p 00000000 00:00 0 
+7f8e9f978000-7f8e9f980000 rw-s 00000000 fd:00 3419099                    /tmp/hsperfdata_vagrant/15557
+7f8e9f980000-7f8e9f981000 ---p 00000000 00:00 0 
+7f8e9f981000-7f8e9f982000 r--p 00000000 00:00 0 
+7f8e9f982000-7f8e9f983000 ---p 00000000 00:00 0 
+7f8e9f983000-7f8e9f986000 r--p 00000000 fd:00 1577329                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjli.so
+7f8e9f986000-7f8e9f996000 r-xp 00003000 fd:00 1577329                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjli.so
+7f8e9f996000-7f8e9f99d000 r--p 00013000 fd:00 1577329                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjli.so
+7f8e9f99d000-7f8e9f99e000 r--p 00019000 fd:00 1577329                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjli.so
+7f8e9f99e000-7f8e9f99f000 rw-p 0001a000 fd:00 1577329                    /home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64/lib/libjli.so
+7f8e9f99f000-7f8e9f9a1000 rw-p 00000000 00:00 0 
+7f8e9f9a1000-7f8e9f9a2000 r--p 00029000 fd:00 7602347                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f8e9f9a2000-7f8e9f9a3000 rw-p 0002a000 fd:00 7602347                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f8e9f9a3000-7f8e9f9a4000 rw-p 00000000 00:00 0 
+7ffdf89b5000-7ffdf89d7000 rw-p 00000000 00:00 0                          [stack]
+7ffdf89f3000-7ffdf89f6000 r--p 00000000 00:00 0                          [vvar]
+7ffdf89f6000-7ffdf89f8000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+
+VM Arguments:
+jvm_args: -Dapplication.home=/home/vagrant/.vscode/extensions/redhat.java-1.26.0-linux-x64/jre/17.0.9-linux-x86_64 -Xms8m -Djdk.module.main=jdk.jcmd 
+java_command: jdk.jcmd/sun.tools.jcmd.JCmd 2641 VM.uptime
+java_class_path (initial): <not set>
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 2                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 2                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 8388608                                   {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1035993088                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {command line}
+    uintx NonNMethodCodeHeapSize                   = 5826188                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122916026                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122916026                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1035993088                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=/home/vagrant/.nvm/versions/node/v20.11.0/bin:/home/vagrant/miniconda3/bin:/home/vagrant/miniconda3/condabin:/home/vagrant/.local/environment-modules/Modules/3.2.10/bin:/Users/ashriram/.local/bin:/Users/ashriram/Library/Python/3.7/bin:/Users/Shared/modules/Modules/3.2.10/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/vagrant/.local/packages/RISCV-32IM/bin:/home/vagrant/.local/packages/qemu-32-riscv/bin:/home/vagrant/.local/packages/cgdb/bin
+USERNAME=vagrant
+LD_LIBRARY_PATH=/home/vagrant/.local/Tcl/lib
+SHELL=/usr/bin/zsh
+DISPLAY=:0
+LANG=en_US.UTF-8
+TERM=xterm-256color
+
+Active Locale:
+LC_ALL=C
+LC_COLLATE=C
+LC_CTYPE=C
+LC_MESSAGES=C
+LC_MONETARY=C
+LC_NUMERIC=C
+LC_TIME=C
+
+Signal Handlers:
+   SIGSEGV: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+    SIGBUS: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+    SIGFPE: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+   SIGPIPE: javaSignalHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGXFSZ: javaSignalHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+    SIGILL: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+   SIGUSR2: SR_handler in libjvm.so, mask=00000000000000000000000000000000, flags=SA_RESTART|SA_SIGINFO, blocked
+    SIGHUP: SIG_DFL, mask=00000000000000000000000000000000, flags=none, blocked
+    SIGINT: SIG_DFL, mask=00000000000000000000000000000000, flags=none, blocked
+   SIGTERM: SIG_DFL, mask=00000000000000000000000000000000, flags=none, blocked
+   SIGQUIT: UserHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGTRAP: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+
+
+Periodic native trim disabled
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"
+uname: Linux 4.15.0-213-generic #224-Ubuntu SMP Mon Jun 19 13:30:12 UTC 2023 x86_64
+OS uptime: 0 days 5:38 hours
+libc: glibc 2.27 NPTL 2.27 
+rlimit (soft/hard): STACK 8192k/infinity , CORE 0k/infinity , NPROC 15576/15576 , NOFILE 4096/4096 , AS infinity/infinity , CPU infinity/infinity , DATA infinity/infinity , FSIZE infinity/infinity , MEMLOCK 65536k/65536k
+load average: 12.77 5.15 2.43
+
+/proc/meminfo:
+MemTotal:        4039124 kB
+MemFree:           85644 kB
+MemAvailable:          0 kB
+Buffers:             604 kB
+Cached:           350220 kB
+SwapCached:         2712 kB
+Active:          2910104 kB
+Inactive:         594404 kB
+Active(anon):    2895716 kB
+Inactive(anon):   579252 kB
+Active(file):      14388 kB
+Inactive(file):    15152 kB
+Unevictable:          64 kB
+Mlocked:              64 kB
+SwapTotal:       1003516 kB
+SwapFree:              0 kB
+Dirty:                88 kB
+Writeback:            80 kB
+AnonPages:       3153272 kB
+Mapped:           125016 kB
+Shmem:            319960 kB
+Slab:              92824 kB
+SReclaimable:      32196 kB
+SUnreclaim:        60628 kB
+KernelStack:       21120 kB
+PageTables:        98140 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     3023076 kB
+Committed_AS:   17125640 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      378816 kB
+DirectMap2M:     3815424 kB
+
+/sys/kernel/mm/transparent_hugepage/enabled: always [madvise] never
+/sys/kernel/mm/transparent_hugepage/defrag (defrag/compaction efforts parameter): always defer defer+madvise [madvise] never
+
+Process Memory:
+Virtual Size: 1657936K (peak: 1686708K)
+Resident Set Size: 5976K (peak: 7084K) (anon: 5976K, file: 0K, shmem: 0K)
+Swapped out: 0K
+C-Heap outstanding allocations: 6701K, retained: 534K
+glibc malloc tunables: (default)
+
+/proc/sys/kernel/threads-max (system-wide limit on the number of threads): 31153
+/proc/sys/vm/max_map_count (maximum number of memory map areas a process may have): 65530
+/proc/sys/kernel/pid_max (system-wide limit on number of process identifiers): 32768
+
+container (cgroup) information:
+container_type: cgroupv1
+cpu_cpuset_cpus: 0-1
+cpu_memory_nodes: 0
+active_processor_count: 2
+cpu_quota: no quota
+cpu_period: 100000
+cpu_shares: no shares
+memory_limit_in_bytes: unlimited
+memory_and_swap_limit_in_bytes: not supported
+memory_soft_limit_in_bytes: unlimited
+memory_usage_in_bytes: 3505112 k
+memory_max_usage_in_bytes: 398104 k
+kernel_memory_usage_in_bytes: unlimited
+kernel_memory_max_usage_in_bytes: unlimited
+kernel_memory_limit_in_bytes: unlimited
+maximum number of tasks: unlimited
+current number of tasks: 480
+
+KVM virtualization detected
+Steal ticks since vm start: 0
+Steal ticks percentage since vm start:  0.000
+
+CPU: total 2 (initial active 2) (2 cores per cpu, 2 threads per core) family 23 model 96 stepping 1 microcode 0x0, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, clmul, bmi1, bmi2, vzeroupper, clflush, clflushopt, hv
+CPU Model and flags from /proc/cpuinfo:
+model name	: AMD Ryzen 5 4600H with Radeon Graphics
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 cx16 sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch ssbd vmmcall fsgsbase bmi1 avx2 bmi2 rdseed clflushopt arat
+
+Online cpus: 0-1
+Offline cpus: 
+BIOS frequency limitation: <Not Available>
+Frequency switch latency (ns): <Not Available>
+Available cpu frequencies: <Not Available>
+Current governor: <Not Available>
+Core performance/turbo boost: <Not Available>
+
+Memory: 4k page, physical 4039124k(84484k free), swap 1003516k(0k free)
+Page Sizes: 4k
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.9+9) for linux-amd64 JRE (17.0.9+9), built on Oct 17 2023 00:00:00 by "admin" with gcc 10.3.0
+
+END.

@@ -12,6 +12,24 @@
         <h1>Interactive Quiz</h1>
     </header>
     <main>
+        <section id="results">
+            <h2>Results</h2>
+            <p id="score">Your Score Was X/10!</p>
+            <div id="result-toggles">
+                <button id="key-toggle">Hide The Answer Key</button>
+                <button id="form-toggle">Show The Quiz</button>
+            </div>
+            <div id="answer-key">
+                <h3>Answer Key</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Correct Answer</th>
+                    </tr>
+                </table>
+            </div>
+        </section>
         <form action="">
             <legend>Question X</legend>
             <p id="query">Query?</p>
@@ -39,16 +57,6 @@
                 <input type="submit" value="Submit Quiz">
             </nav>
         </form>
-        <section id="results">
-            <h2>Results</h2>
-            <p id="score">Your Score Was X/10</p>
-            <table>
-                <tr>
-                    <th>Question</th>
-                    <th>Correct Answer</th>
-                </tr>
-            </table>
-        </section>
     </main>
 </body>
 </html>
