@@ -8,7 +8,7 @@ let questions = [
             "3"
         ],
         answer: 2,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is the title of this website?",
@@ -19,7 +19,7 @@ let questions = [
             "Math Quiz"
         ],
         answer: 2,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is the capital of Canada?",
@@ -30,7 +30,7 @@ let questions = [
             "Vancouver"
         ],
         answer: 0,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 5*5-10*2?",
@@ -41,7 +41,7 @@ let questions = [
             "5"
         ],
         answer: 3,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 2+7?",
@@ -52,7 +52,7 @@ let questions = [
             "2"
         ],
         answer: 2,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 23+12?",
@@ -63,7 +63,7 @@ let questions = [
             "35"
         ],
         answer: 3,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 5*12?",
@@ -74,7 +74,7 @@ let questions = [
             "61"
         ],
         answer: 2,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 19*20/4?",
@@ -85,7 +85,7 @@ let questions = [
             "94"
         ],
         answer: 1,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 4+25-5+2*3?",
@@ -96,7 +96,7 @@ let questions = [
             "31"
         ],
         answer: 0,
-        selection: -1
+        choice: -1
     },
     {
         query: "What is 19*20/5?",
@@ -107,7 +107,7 @@ let questions = [
             "94"
         ],
         answer: 0,
-        selection: -1
+        choice: -1
     }
 ]
 let curQuestion = 0;
@@ -118,6 +118,7 @@ const NUMQUESTIONS = 10;
 let form = document.querySelector("form");
 let legend = document.querySelector("legend");
 let queryP = document.getElementById("query");
+let optionDivs = document.getElementById("answers").children;
 let radios = document.querySelectorAll("input[type='radio']");
 let labels = document.querySelectorAll("label");
 let prevBtn = document.getElementById("previous");
@@ -128,12 +129,17 @@ let resultDiv = document.getElementById("results");
 let scoreP = document.getElementById("score");
 let resetBtn = document.getElementById("reset");
 
+
+// Function Definitions
 function resetQuiz() {
     resultDiv.style.display = "none";
     form.style.display = "";
+    nextBtn.style.display = "";
+    
     for(let i = 0; i < NUMQUESTIONS; i++) {
-        questions[i].selection = -1;
+        questions[i].choice = -1;
     }
+    renderQuestion(questions[0]);
 }
 
 function renderQuestion(question) {
@@ -142,9 +148,12 @@ function renderQuestion(question) {
     for(let i = 0; i < radios.length; i++) {
         labels[i].textContent = question.options[i];
         radios[i].checked = false;
+        radios[i].disabled = false;
+        optionDivs[i].classList.remove("correct");
+        optionDivs[i].classList.remove("incorrect");
     }
-    if (question.selection != -1) {
-        radios[question.selection].checked = true;
+    if (question.choice != -1) {
+        chooseOption(question.choice);
     }
 }
 
@@ -154,37 +163,67 @@ function renderResults(e) {
     resultDiv.style.display = "";
     let score = 0;
     for (let i = 0; i < NUMQUESTIONS; i++) {
-        score += (questions[i].answer == questions[i].selection);
+        score += (questions[i].answer == questions[i].choice);
     }
     scoreP.textContent = `Your Score Was ${score}/${NUMQUESTIONS}`;
 }
 
+function chooseOption(choice) {
+    let question = questions[curQuestion]
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].disabled = true;
+    }
 
-// Add Event Listeners
-
-for (let i = 0; i < 4; i++) {
-    radios[i].addEventListener('click', (e) => {
-        questions[curQuestion].selection = e.target.id;
-    })
+    question.choice = choice;
+    if (question.choice != question.answer && question.choice != -1) {
+        optionDivs[choice].classList.add("incorrect")
+    }
+    optionDivs[question.answer].classList.add("correct");
+    nextBtn.disabled = false;
 }
 
-prevBtn.addEventListener("click", (e) => {
+function getPrevQuestion(e) {
     e.preventDefault();
     curQuestion--;
     renderQuestion(questions[curQuestion]);
-
-    nextBtn.style.visibility = "visible";
     if (curQuestion <= 0) prevBtn.style.visibility = "hidden";
-})
+    nextBtn.style.display = "";
+    submitBtn.style.display = "none";
+}
 
-nextBtn.addEventListener("click", (e) => {
+function getNextQuestion(e) {
     e.preventDefault();
+    nextBtn.disabled = true;
     curQuestion++;
     renderQuestion(questions[curQuestion]);
 
     prevBtn.style.visibility = "visible";
-    if (curQuestion >= NUMQUESTIONS - 1) nextBtn.style.visibility = "hidden";
-})
+    if (curQuestion >= NUMQUESTIONS - 1) {
+        nextBtn.style.display = "none"
+    }
+
+    let choice = questions[curQuestion].choice
+    if (choice != -1) chooseOption(choice);
+}
+
+
+// Event Listeners
+
+for (let i = 0; i < radios.length; i++) {
+    radios[i].style.display = "none";
+    optionDivs[i].addEventListener('click', () => {
+        let radio = radios[i];
+        if (radio.disabled == false) {
+            let choice = radio.id;
+            radio.checked = true;
+            chooseOption(choice);
+        }
+    })
+}
+
+prevBtn.addEventListener("click", getPrevQuestion)
+
+nextBtn.addEventListener("click", getNextQuestion)
 
 submitBtn.addEventListener("click", renderResults);
 
@@ -194,4 +233,6 @@ resetBtn.addEventListener("click", resetQuiz);
 // Startup Code
 resultDiv.style.display = "none";
 prevBtn.style.visibility = "hidden";
+submitBtn.style.display = "none";
+nextBtn.disabled = true;
 renderQuestion(questions[curQuestion]);
