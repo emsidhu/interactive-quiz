@@ -114,6 +114,7 @@ let curQuestion = 0;
 const NUMQUESTIONS = 10;
 
 // Get DOM elements
+// Form
 let form = document.querySelector("form");
 let legend = document.querySelector("legend");
 let queryP = document.getElementById("query");
@@ -122,10 +123,21 @@ let labels = document.querySelectorAll("label");
 let prevBtn = document.getElementById("previous");
 let nextBtn = document.getElementById("next");
 let submitBtn = document.querySelector("input[type='submit']");
+// Results
+let resultDiv = document.getElementById("results");
+let scoreP = document.getElementById("score");
+let resetBtn = document.getElementById("reset");
 
+function resetQuiz() {
+    resultDiv.style.display = "none";
+    form.style.display = "";
+    for(let i = 0; i < NUMQUESTIONS; i++) {
+        questions[i].selection = -1;
+    }
+}
 
 function renderQuestion(question) {
-    legend.textContent = "Question " + (curQuestion+1);
+    legend.textContent = `Question ${curQuestion + 1}`;
     queryP.textContent = question.query;
     for(let i = 0; i < radios.length; i++) {
         labels[i].textContent = question.options[i];
@@ -138,10 +150,13 @@ function renderQuestion(question) {
 
 function renderResults(e) {
     e.preventDefault()
+    form.style.display = "none";
+    resultDiv.style.display = "";
     let score = 0;
     for (let i = 0; i < NUMQUESTIONS; i++) {
         score += (questions[i].answer == questions[i].selection);
     }
+    scoreP.textContent = `Your Score Was ${score}/${NUMQUESTIONS}`;
 }
 
 
@@ -171,6 +186,12 @@ nextBtn.addEventListener("click", (e) => {
     if (curQuestion >= NUMQUESTIONS - 1) nextBtn.style.visibility = "hidden";
 })
 
+submitBtn.addEventListener("click", renderResults);
+
+resetBtn.addEventListener("click", resetQuiz);
+
+
 // Startup Code
+resultDiv.style.display = "none";
 prevBtn.style.visibility = "hidden";
 renderQuestion(questions[curQuestion]);
