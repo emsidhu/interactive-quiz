@@ -113,3 +113,64 @@ let questions = [
 let curQuestion = 0;
 const NUMQUESTIONS = 10;
 
+// Get DOM elements
+let form = document.querySelector("form");
+let legend = document.querySelector("legend");
+let queryP = document.getElementById("query");
+let radios = document.querySelectorAll("input[type='radio']");
+let labels = document.querySelectorAll("label");
+let prevBtn = document.getElementById("previous");
+let nextBtn = document.getElementById("next");
+let submitBtn = document.querySelector("input[type='submit']");
+
+
+function renderQuestion(question) {
+    legend.textContent = "Question " + (curQuestion+1);
+    queryP.textContent = question.query;
+    for(let i = 0; i < radios.length; i++) {
+        labels[i].textContent = question.options[i];
+        radios[i].checked = false;
+    }
+    if (question.selection != -1) {
+        radios[question.selection].checked = true;
+    }
+}
+
+function renderResults(e) {
+    e.preventDefault()
+    let score = 0;
+    for (let i = 0; i < NUMQUESTIONS; i++) {
+        score += (questions[i].answer == questions[i].selection);
+    }
+}
+
+
+// Add Event Listeners
+
+for (let i = 0; i < 4; i++) {
+    radios[i].addEventListener('click', (e) => {
+        questions[curQuestion].selection = e.target.id;
+    })
+}
+
+prevBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    curQuestion--;
+    renderQuestion(questions[curQuestion]);
+
+    nextBtn.style.visibility = "visible";
+    if (curQuestion <= 0) prevBtn.style.visibility = "hidden";
+})
+
+nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    curQuestion++;
+    renderQuestion(questions[curQuestion]);
+
+    prevBtn.style.visibility = "visible";
+    if (curQuestion >= NUMQUESTIONS - 1) nextBtn.style.visibility = "hidden";
+})
+
+// Startup Code
+prevBtn.style.visibility = "hidden";
+renderQuestion(questions[curQuestion]);
