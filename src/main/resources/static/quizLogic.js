@@ -152,11 +152,18 @@ function renderQuestion(question) {
 
 function renderResults(e) {
     e.preventDefault();
-    form.style.display = "none";
+    //Show Results Section
     resultDiv.style.display = "";
+    // Hide Form Section
+    form.style.display = "none";
+    // Hide Submit button so the quiz cannot be submitted again
     submitBtn.style.display = "none";
+    // Reset Form
+    prevBtn.style.visibility = "hidden";
     nextBtn.style.display = "";
-    nextBtn.style.visibility = "hidden";
+    curQuestion = 0;
+    renderQuestion(questions[curQuestion]);
+
     let score = 0;
     for (let i = 0; i < NUMQUESTIONS; i++) {
         score += (questions[i].answer == questions[i].choice);
@@ -245,8 +252,6 @@ function toggleAnswerKey() {
 function toggleForm() {
     if (form.style.display == "none") {
         toggleFormBtn.textContent = "Hide the Quiz"
-        curQuestion = 0;
-        renderQuestion(questions[0]);
         form.style.display = "";
     } else {
         toggleFormBtn.textContent = "Show the Quiz"
