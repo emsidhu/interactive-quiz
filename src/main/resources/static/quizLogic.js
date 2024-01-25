@@ -127,21 +127,10 @@ let submitBtn = document.querySelector("input[type='submit']");
 // Results
 let resultDiv = document.getElementById("results");
 let scoreP = document.getElementById("score");
-let resetBtn = document.getElementById("reset");
+let table = document.querySelector("table");
 
 
 // Function Definitions
-function resetQuiz() {
-    resultDiv.style.display = "none";
-    form.style.display = "";
-    nextBtn.style.display = "";
-    
-    for(let i = 0; i < NUMQUESTIONS; i++) {
-        questions[i].choice = -1;
-    }
-    renderQuestion(questions[0]);
-}
-
 function renderQuestion(question) {
     legend.textContent = `Question ${curQuestion + 1}`;
     queryP.textContent = question.query;
@@ -166,6 +155,7 @@ function renderResults(e) {
         score += (questions[i].answer == questions[i].choice);
     }
     scoreP.textContent = `Your Score Was ${score}/${NUMQUESTIONS}`;
+    populateAnswerTable();
 }
 
 function chooseOption(choice) {
@@ -180,15 +170,16 @@ function chooseOption(choice) {
     }
     optionDivs[question.answer].classList.add("correct");
     nextBtn.disabled = false;
+    submitBtn.style.visibility = curQuestion < 9 ? "hidden" : "";
 }
 
 function getPrevQuestion(e) {
     e.preventDefault();
     curQuestion--;
     renderQuestion(questions[curQuestion]);
-    if (curQuestion <= 0) prevBtn.style.visibility = "hidden";
+    prevBtn.style.visibility = curQuestion <= 0 ? "hidden" : "";
     nextBtn.style.display = "";
-    submitBtn.style.display = "none";
+    submitBtn.style.display = "none"
 }
 
 function getNextQuestion(e) {
@@ -204,8 +195,26 @@ function getNextQuestion(e) {
 
     let choice = questions[curQuestion].choice
     if (choice != -1) chooseOption(choice);
+    submitBtn.style.display = curQuestion < 9 ? "none" : "";
 }
 
+function populateAnswerTable() {
+    for (let i = 0; i < NUMQUESTIONS; i++) {
+        let question = questions[i];
+
+        let tr = document.createElement("tr");
+        let tdQuery = document.createElement("td");
+        let tdCorrect = document.createElement("td");
+        let tdChoice = document.createElement("td");
+        
+        tdQuery.textContent = question.query;
+        tdCorrect.textContent = question.options[question.answer];
+        table.appendChild(tr);
+        tr.appendChild(tdQuery);
+        tr.appendChild(tdCorrect);
+
+    }
+}
 
 // Event Listeners
 
@@ -227,12 +236,11 @@ nextBtn.addEventListener("click", getNextQuestion)
 
 submitBtn.addEventListener("click", renderResults);
 
-resetBtn.addEventListener("click", resetQuiz);
-
 
 // Startup Code
 resultDiv.style.display = "none";
 prevBtn.style.visibility = "hidden";
 submitBtn.style.display = "none";
+submitBtn.style.visibility = false;
 nextBtn.disabled = true;
 renderQuestion(questions[curQuestion]);
