@@ -117,8 +117,7 @@ const NUMQUESTIONS = questions.length;
 // Get DOM elements
 // Form
 let form = document.querySelector("form");
-let legend = document.querySelector("legend");
-let queryP = document.getElementById("query");
+let queryL = document.getElementById("query");
 let optionDivs = document.getElementById("answers").children;
 let radios = document.querySelectorAll("input[type='radio']");
 let labels = document.querySelectorAll("label");
@@ -136,14 +135,15 @@ let toggleFormBtn = document.getElementById("form-toggle");
 
 // Function Definitions
 function renderQuestion(question) {
-    legend.textContent = `Question ${curQuestion + 1}`;
-    queryP.textContent = question.query;
+    queryL.textContent = `Question ${curQuestion + 1}: ${question.query}`;
     for(let i = 0; i < radios.length; i++) {
         labels[i].textContent = question.options[i];
         radios[i].checked = false;
         radios[i].disabled = false;
         optionDivs[i].classList.remove("correct");
         optionDivs[i].classList.remove("incorrect");
+        optionDivs[i].style.cursor = "pointer";
+        labels[i].style.cursor = "pointer";
     }
     if (question.choice != -1) {
         chooseOption(question.choice);
@@ -154,13 +154,14 @@ function renderResults(e) {
     e.preventDefault();
     //Show Results Section
     resultDiv.style.display = "";
-    // Hide Form Section
-    form.style.display = "none";
+
     // Hide Submit button so the quiz cannot be submitted again
     submitBtn.style.display = "none";
-    // Reset Form
+    // Setup Form
+    form.style.display = "none";
     prevBtn.style.visibility = "hidden";
     nextBtn.style.display = "";
+    queryL.style.marginTop = "10px";
     curQuestion = 0;
     renderQuestion(questions[curQuestion]);
 
@@ -177,6 +178,8 @@ function chooseOption(choice) {
     let question = questions[curQuestion]
     for (let i = 0; i < radios.length; i++) {
         radios[i].disabled = true;
+        optionDivs[i].style.cursor = "default";
+        labels[i].style.cursor = "default"
     }
 
     question.choice = choice;
